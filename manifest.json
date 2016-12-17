@@ -5,19 +5,24 @@
   "description": "This extension shows a Google Image search result for the current page",
   "version": "1.0",
 
-  "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html"
+  "background": {
+    "scripts": ["eventPage.js"],
+    "persistent": false
   },
-  "permissions": [
-    "activeTab",
-    "https://ajax.googleapis.com/"
-  ],
 
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+    
   "content_scripts":[
     {
       "matches": ["http://*/*", "https://*/*"],
       "js": ["myScript.js"]
     }
+  ],
+
+  "permissions": [
+    "activeTab",
+    "https://ajax.googleapis.com/"
   ]
 }
