@@ -25,6 +25,7 @@ chrome.contextMenus.create({
     contexts: ['selection']
 });
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
-    alert('Sending text to KK-Pedia...');
+    alert('Sending text to KK-Pedia...\ntitle:'+tab.title+'\ntext:'+info.selectionText);
+    // console.log(info,tab);
 });
 
