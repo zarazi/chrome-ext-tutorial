@@ -4,6 +4,12 @@
   "name": "Getting started example",
   "description": "This extension shows a Google Image search result for the current page",
   "version": "1.0",
+  "icons": {
+    "16": "icon.png",
+    "32": "icon.png",
+    "64": "icon.png",
+    "128": "icon.png"
+  },
 
   "background": {
     "scripts": ["eventPage.js"],
@@ -23,6 +29,7 @@
 
   "permissions": [
     "activeTab",
-    "https://ajax.googleapis.com/"
+    "https://ajax.googleapis.com/",
+    "https://script.google.com/"
   ]
 }
