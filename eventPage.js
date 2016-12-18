@@ -18,3 +18,13 @@ chrome.browserAction.onClicked.addListener(function(tab) {
     }
     http.send(params);
 });
+
+chrome.contextMenus.create({
+    id: 'sendTextToKKPedia',
+    title: 'Send text to KK-Pedia',
+    contexts: ['selection']
+});
+chrome.contextMenus.onClicked.addListener(function (info, tab) {
+    alert('Sending text to KK-Pedia...');
+});
+
