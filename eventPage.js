@@ -40,8 +40,8 @@ function sendTextToKKPedia(fileName, fileContent, tabId) {
     http.open("POST", url, true);
     http.onreadystatechange = function() {//Call a function when the state changes.
         if(http.readyState == 4 && http.status == 200) {
-            console.log('done sending text to KKPedia.');
-            alert('Done sending text to KKPedia.');
+            console.log('saved to KKPedia.');
+            alert('Saved to KKPedia.');
         }
     }
     http.send(formData);
