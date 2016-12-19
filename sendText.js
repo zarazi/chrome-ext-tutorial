@@ -8,6 +8,13 @@ document.getElementById('fileContent').value = fileData.fileContent;
 document.getElementById('sendText').addEventListener('click', function(e){
     var fileName = document.getElementById('fileName').value;
     var fileContent = document.getElementById('fileContent').value;
-    bg.sendTextToKKPedia(fileName, fileContent);
+    chrome.tabs.getCurrent(function(tab){
+        console.log(tab.id);
+        bg.sendTextToKKPedia(fileName, fileContent, tab.id);
+    });
+    // chrome.runtime.sendMessage(null, {fileName:fileName, fileContent:fileContent}, {}, function() {
+    //     alert('finish sending.');
+    // });
+    // bg.sendTextToKKPedia(fileName, fileContent);
 })
 console.log(fileData.fileName, fileData.fileContent);

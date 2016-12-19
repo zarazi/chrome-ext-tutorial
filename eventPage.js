@@ -6,6 +6,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 
 currentFileName='';
 currentFileContent='';
+currentTabId='';
 chrome.contextMenus.create({
     id: 'sendTextToKKPedia',
     title: 'Send text to KK-Pedia',
@@ -23,7 +24,9 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
 function getCurrentFileData() {
     return {fileName: currentFileName, fileContent: currentFileContent};
 }
-function sendTextToKKPedia(fileName, fileContent) {
+function sendTextToKKPedia(fileName, fileContent, tabId) {
+    currentTabId = tabId;
+
     var http = new XMLHttpRequest();
     var url = "https://script.google.com/macros/s/AKfycbyImFFsA6WPxo9u-aDz52XbMZuJpE87Fl36Fmy8AduydmuVZBo1/exec";
     var params = "file_name="+fileName+"&file_content="+fileContent;
@@ -34,11 +37,18 @@ function sendTextToKKPedia(fileName, fileContent) {
 
     http.onreadystatechange = function() {//Call a function when the state changes.
         if(http.readyState == 4 && http.status == 200) {
-            alert(http.responseText);
+            console.log('done sending text to KKPedia.');
+            var t = chrome.extension.getViews({type: 'tab', tabId: currentTabId});
+            if (t && t[0]) t[0].close();
         }
     }
     http.send(params);
 }
+
+chrome.runtime.onMessage.addListener(function(message, sender) {
+    console.log(message);
+    console.log(sender);
+});
 
 
 
