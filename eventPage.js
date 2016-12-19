@@ -2,10 +2,31 @@ console.log('eventpage loaded.');
 
 chrome.browserAction.onClicked.addListener(function(tab) {
     console.log('browserAction clicked!');
+});
 
+currentFileName='';
+currentFileContent='';
+chrome.contextMenus.create({
+    id: 'sendTextToKKPedia',
+    title: 'Send text to KK-Pedia',
+    contexts: ['selection']
+});
+chrome.contextMenus.onClicked.addListener(function (info, tab) {
+    // alert('Sending text to KK-Pedia...\ntitle:'+tab.title+'\ntext:'+info.selectionText);
+    // console.log(info,tab);
+    currentFileName = tab.title;
+    currentFileContent = info.selectionText;
+    chrome.tabs.create({url: chrome.extension.getURL('sendText.html')}, function(tab)  {
+        console.log(tab);
+    });
+});
+function getCurrentFileData() {
+    return {fileName: currentFileName, fileContent: currentFileContent};
+}
+function sendTextToKKPedia(fileName, fileContent) {
     var http = new XMLHttpRequest();
     var url = "https://script.google.com/macros/s/AKfycbyImFFsA6WPxo9u-aDz52XbMZuJpE87Fl36Fmy8AduydmuVZBo1/exec";
-    var params = "file_name=test&file_content=elephant";
+    var params = "file_name="+fileName+"&file_content="+fileContent;
     http.open("POST", url, true);
 
     //Send the proper header information along with the request
@@ -17,15 +38,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
         }
     }
     http.send(params);
-});
+}
 
-chrome.contextMenus.create({
-    id: 'sendTextToKKPedia',
-    title: 'Send text to KK-Pedia',
-    contexts: ['selection']
-});
-chrome.contextMenus.onClicked.addListener(function (info, tab) {
-    alert('Sending text to KK-Pedia...\ntitle:'+tab.title+'\ntext:'+info.selectionText);
-    // console.log(info,tab);
-});
+
 
