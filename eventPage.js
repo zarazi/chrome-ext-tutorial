@@ -15,7 +15,9 @@ chrome.contextMenus.create({
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
     currentFileName = tab.title;
     currentFileContent = info.selectionText;
-    chrome.tabs.create({url: chrome.extension.getURL('sendText.html')}, function(tab)  {
+    chrome.tabs.create({
+        url: chrome.extension.getURL('sendText.html')
+    }, function(tab)  {
         console.log('new tab created: '+tab.id);
     });
 });

@@ -1,15 +1,28 @@
 <html>
-    <head></head>
+    <head>
+        <style>
+            .container { width:80%; margin:auto; text-align:left; margin-top: 50px}
+            h1 { margin: 15px; text-align: center;}
+            .field-block { margin: 15px; }
+            .field { width: 100%; font-size: 1.25rem;}
+            .field-title { text-align: center; }
+            .field-textarea { height: 450px; }
+            button { padding: 10px; }
+        </style> 
+    </head>
     <body>
         <form id="sendText">
-            <div>
-                <input id="fileName" type="text" />
-            </div>
-            <div>
-                <textarea id="fileContent"></textarea>
-            </div>
-            <div>
-                <button id="sendButton">Send</button>
+            <div class="container">
+                <h1>KK-Pedia</h1>
+                <div class="field-block">
+                    <input class="field field-title" id="fileName" type="text" />
+                </div>
+                <div class="field-block">
+                    <textarea class="field field-textarea" id="fileContent"></textarea>
+                </div>
+                <div class="field-block">
+                    <button class="field" id="sendButton">Save to KK-Pedia</button>
+                </div>
             </div>
         </form>
         <script src="sendText.js"></script>
