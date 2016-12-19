@@ -23,6 +23,8 @@ function getCurrentFileData() {
     return {fileName: currentFileName, fileContent: currentFileContent};
 }
 function sendTextToKKPedia(fileName, fileContent, tabId) {
+    currentFileName = fileName;
+    currentFileContent = fileContent;
     currentTabId = tabId;
 
     var formData = new FormData();
@@ -37,8 +39,7 @@ function sendTextToKKPedia(fileName, fileContent, tabId) {
     http.onreadystatechange = function() {//Call a function when the state changes.
         if(http.readyState == 4 && http.status == 200) {
             console.log('done sending text to KKPedia.');
-            var t = chrome.extension.getViews({type: 'tab', tabId: currentTabId});
-            if (t && t[0]) t[0].close();
+            alert('Done sending text to KKPedia.');
         }
     }
     http.send(formData);
