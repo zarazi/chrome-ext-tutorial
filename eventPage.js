@@ -1,5 +1,6 @@
 console.log('eventpage loaded.');
 
+currentPageUrl='';
 currentFileName='';
 currentFileContent='';
 currentTabId='';
@@ -11,13 +12,20 @@ chrome.runtime.onInstalled.addListener(function() {
         contexts: ['selection']
     });
     chrome.contextMenus.onClicked.addListener(function (info, tab) {
+        currentPageUrl = tab.url;
         currentFileName = tab.title;
-        currentFileContent = info.selectionText;
-        chrome.tabs.create({
-            url: chrome.extension.getURL('sendText.html')
-        }, function(tab)  {
-            console.log('new tab created: '+tab.id);
+        // currentFileContent = info.selectionText.replace(/[ ]{2,}/gi,'\n');
+        chrome.tabs.executeScript(tab.id, {
+            code:'window.getSelection().toString()'
+        },function(selectionText){
+            currentFileContent = selectionText[0];
+            chrome.tabs.create({
+                url: chrome.extension.getURL('sendText.html')
+            }, function(tab)  {
+                console.log('new tab created: '+tab.id);
+            });
         });
+        
     });
 });
 
@@ -26,17 +34,19 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 });
 
 function getCurrentFileData() {
-    return {fileName: currentFileName, fileContent: currentFileContent};
+    return {pageUrl: currentPageUrl, fileName: currentFileName, fileContent: currentFileContent};
 }
-function sendTextToKKPedia(fileName, fileContent, tabId) {
+function sendTextToKKPedia(pageUrl, fileName, fileContent, tabId) {
+    currentPageUrl = pageUrl,
     currentFileName = fileName;
     currentFileContent = fileContent;
     currentTabId = tabId;
 
     var formData = new FormData();
+        formData.append("page_url", pageUrl);
         formData.append("file_name", fileName);
         formData.append("file_content", fileContent);
-        console.log('sending data: ', fileName, fileContent);
+        console.log('sending data: ', pageUrl, fileName, fileContent);
 
     var http = new XMLHttpRequest();
     var url = "https://script.google.com/macros/s/AKfycbyImFFsA6WPxo9u-aDz52XbMZuJpE87Fl36Fmy8AduydmuVZBo1/exec";
