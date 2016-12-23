@@ -5,9 +5,6 @@ currentFileContent='';
 currentTabId='';
 
 chrome.runtime.onInstalled.addListener(function() {
-    chrome.browserAction.onClicked.addListener(function(tab) {
-        console.log('browserAction clicked!');
-    });
     chrome.contextMenus.create({
         id: 'sendTextToKKPedia',
         title: 'Send text to KK-Pedia',
@@ -22,6 +19,10 @@ chrome.runtime.onInstalled.addListener(function() {
             console.log('new tab created: '+tab.id);
         });
     });
+});
+
+chrome.browserAction.onClicked.addListener(function(tab) {
+    console.log('browserAction clicked!');
 });
 
 function getCurrentFileData() {
