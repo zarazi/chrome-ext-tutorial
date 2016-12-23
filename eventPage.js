@@ -41,7 +41,12 @@ function sendTextToKKPedia(fileName, fileContent, tabId) {
     http.onreadystatechange = function() {//Call a function when the state changes.
         if(http.readyState == 4 && http.status == 200) {
             console.log('saved to KKPedia.');
-            alert('Saved to KKPedia.');
+            chrome.notifications.create(null, {
+                title: 'KK-Pedia Message',
+                iconUrl: 'icon.png',
+                type: 'basic',
+                message: "Content is saved to KK-Pedia."
+            }, function() {});
         }
     }
     http.send(formData);

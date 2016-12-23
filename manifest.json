@@ -30,6 +30,7 @@
   "permissions": [
     "contextMenus",
     "activeTab",
+    "notifications",
     "https://ajax.googleapis.com/",
     "https://script.google.com/"
   ]
