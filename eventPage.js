@@ -1,26 +1,29 @@
 console.log('eventpage loaded.');
 
-chrome.browserAction.onClicked.addListener(function(tab) {
-    console.log('browserAction clicked!');
-});
-
 currentFileName='';
 currentFileContent='';
 currentTabId='';
-chrome.contextMenus.create({
-    id: 'sendTextToKKPedia',
-    title: 'Send text to KK-Pedia',
-    contexts: ['selection']
-});
-chrome.contextMenus.onClicked.addListener(function (info, tab) {
-    currentFileName = tab.title;
-    currentFileContent = info.selectionText;
-    chrome.tabs.create({
-        url: chrome.extension.getURL('sendText.html')
-    }, function(tab)  {
-        console.log('new tab created: '+tab.id);
+
+chrome.runtime.onInstalled.addListener(function() {
+    chrome.browserAction.onClicked.addListener(function(tab) {
+        console.log('browserAction clicked!');
+    });
+    chrome.contextMenus.create({
+        id: 'sendTextToKKPedia',
+        title: 'Send text to KK-Pedia',
+        contexts: ['selection']
+    });
+    chrome.contextMenus.onClicked.addListener(function (info, tab) {
+        currentFileName = tab.title;
+        currentFileContent = info.selectionText;
+        chrome.tabs.create({
+            url: chrome.extension.getURL('sendText.html')
+        }, function(tab)  {
+            console.log('new tab created: '+tab.id);
+        });
     });
 });
+
 function getCurrentFileData() {
     return {fileName: currentFileName, fileContent: currentFileContent};
 }
