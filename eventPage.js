@@ -1,9 +1,9 @@
 console.log('eventpage loaded.');
 
-currentPageUrl='';
-currentFileName='';
-currentFileContent='';
-currentTabId='';
+var currentPageUrl='';
+var currentFileName='';
+var currentFileContent='';
+var currentTabId='';
 
 chrome.runtime.onInstalled.addListener(function() {
     console.log('onInstalled!');
