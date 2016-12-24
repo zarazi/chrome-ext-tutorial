@@ -70,7 +70,7 @@ function sendTextToKKPedia(pageUrl, fileName, fileContent, tabId) {
             console.log('saved to KKPedia.');
             chrome.notifications.create(null, {
                 title: 'KK-Pedia Message',
-                iconUrl: 'icon.png',
+                iconUrl: 'kk-black-64.png',
                 type: 'basic',
                 message: "Content is saved to KK-Pedia."
             }, function() {});
