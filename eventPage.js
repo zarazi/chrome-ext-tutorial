@@ -57,7 +57,7 @@ function sendTextToKKPedia(pageUrl, fileName, fileContent, tabId) {
     var formData = new FormData();
         formData.append("page_url", pageUrl);
         formData.append("file_name", fileName);
-        formData.append("file_content", fileContent);
+        formData.append("file_content", fileContent.replace(/\n\n/g,'\n'));
         console.log('sending data: ', pageUrl, fileName, fileContent);
 
     var http = new XMLHttpRequest();
