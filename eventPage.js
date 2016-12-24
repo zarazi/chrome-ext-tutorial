@@ -6,28 +6,40 @@ currentFileContent='';
 currentTabId='';
 
 chrome.runtime.onInstalled.addListener(function() {
+    console.log('onInstalled!');
+
     chrome.contextMenus.create({
         id: 'sendTextToKKPedia',
         title: 'Send text to KK-Pedia',
         contexts: ['selection']
     });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    console.log('DOMContentLoaded!');
+    
     chrome.contextMenus.onClicked.addListener(function (info, tab) {
-        currentPageUrl = tab.url;
-        currentFileName = tab.title;
-        // currentFileContent = info.selectionText.replace(/[ ]{2,}/gi,'\n');
-        chrome.tabs.executeScript(tab.id, {
-            code:'window.getSelection().toString()'
-        },function(selectionText){
-            currentFileContent = selectionText[0];
-            chrome.tabs.create({
-                url: chrome.extension.getURL('sendText.html')
-            }, function(tab)  {
-                console.log('new tab created: '+tab.id);
-            });
-        });
-        
+        switch(info.menuItemId) {
+            case "sendTextToKKPedia": openSendTextPage(tab); break;
+        }
     });
 });
+
+function openSendTextPage(tab) {
+    currentPageUrl = tab.url;
+    currentFileName = tab.title;
+    // currentFileContent = info.selectionText.replace(/[ ]{2,}/gi,'\n');
+    chrome.tabs.executeScript(tab.id, {
+        code:'window.getSelection().toString()'
+    },function(selectionText){
+        currentFileContent = selectionText[0];
+        chrome.tabs.create({
+            url: chrome.extension.getURL('sendText.html')
+        }, function(tab)  {
+            console.log('new tab created: '+tab.id);
+        });
+    });
+}
 
 chrome.browserAction.onClicked.addListener(function(tab) {
     console.log('browserAction clicked!');
@@ -49,7 +61,8 @@ function sendTextToKKPedia(pageUrl, fileName, fileContent, tabId) {
         console.log('sending data: ', pageUrl, fileName, fileContent);
 
     var http = new XMLHttpRequest();
-    var url = "https://script.google.com/macros/s/AKfycbyImFFsA6WPxo9u-aDz52XbMZuJpE87Fl36Fmy8AduydmuVZBo1/exec";
+    //var url = "https://script.google.com/macros/s/AKfycbyImFFsA6WPxo9u-aDz52XbMZuJpE87Fl36Fmy8AduydmuVZBo1/exec";
+    var url = "https://script.google.com/macros/s/AKfycbwL3CFBU1qC8dB0d3f_FpmbqFa51pi7Hhiiqv3DtHsVhWLwuBg/exec";
 
     http.open("POST", url, true);
     http.onreadystatechange = function() {//Call a function when the state changes.
