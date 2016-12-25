@@ -43,6 +43,10 @@ function openSendTextPage(tab) {
 
 chrome.browserAction.onClicked.addListener(function(tab) {
     console.log('browserAction clicked!');
+    chrome.tabs.sendMessage(tab.id, {command: 'togglePopup'}, {}, function(res) {
+        console.log('> finished sendMessage: togglePopup to tab.');
+        console.log('> get response: ', res);
+    })
 });
 
 function getCurrentFileData() {
