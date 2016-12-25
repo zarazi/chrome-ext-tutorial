@@ -1,18 +1,53 @@
-<!doctype html>
-<!--
- This page is shown when the extension button is clicked, because the
- "browser_action" field in manifest.json contains the "default_popup" key with
- value "popup.html".
- -->
 <html>
+    <head>
+        <style>
+            body {
+                margin: 0; 
+                /*overflow: hidden;*/
+            }
+            .popup {
+                background: #fff;
+                /*border: 1px solid rgba(0,0,0,0.2);*/
+                /*-webkit-border-radius: 2px;*/
+                /*border-radius: 2px;*/
+                /*-webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0,0,0,0.12);*/
+                /*box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0,0,0,0.12);*/
+                left: 0;
+                margin: 4px 8px 8px 4px;
+                /*opacity: 0;*/
+                top: 0;
+                /*-webkit-transform: translateY(-30px);*/
+                /*transform: translateY(-30px);*/
+                /*-webkit-transition: background-color .218s linear,opacity .218s ease-in,transform .218s ease-in;*/
+                /*transition: background-color .218s linear,opacity .218s ease-in,transform .218s ease-in;*/
+                width: 360px;
 
-<head>
-  <title>Getting Started Extension's Popup</title>
-  <script src="./popup.js"></script>
-<head>
-
-<body>
-  Hello world!
-</body>
-
+                /*position: fixed;*/
+            }
+            .popup-show {
+                    opacity: 1;
+                    -webkit-transform: translateY(0);
+                    transform: translateY(0);
+            }
+            h1, .field-block { margin: 15px; }
+            .field { width: 100%;}
+            .field-title { text-align: center; }
+            .field-content { height: 250px; }
+        </style>
+    </head>
+    <body>
+        <div id="kk-popup-container" class="popup">   
+            <h1>KK-Pedia</h1>
+            <input type="hidden" id="pageUrl" />
+            <div class="field-block">
+                <input class="field field-title" id="fileName" type="text" />
+            </div>
+            <div class="field-block">
+                <textarea class="field field-content" id="fileContent"></textarea>
+            </div>
+            <div class="field-block">
+                <button class="field" id="sendButton">Save to KK-Pedia</button>
+            </div>
+        </div>
+    </body>
 </html>
