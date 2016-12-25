@@ -23,7 +23,7 @@
   "content_scripts":[
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["myScript.js"]
+      "js": ["inject.js"]
     }
   ],
   "web_accessible_resources": [
