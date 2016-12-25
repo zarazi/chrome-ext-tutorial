@@ -15,14 +15,15 @@ chrome.runtime.onInstalled.addListener(function() {
     });
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    console.log('DOMContentLoaded!');
-    
-    chrome.contextMenus.onClicked.addListener(function (info, tab) {
-        switch(info.menuItemId) {
-            case "sendTextToKKPedia": openSendTextPage(tab); break;
-        }
-    });
+chrome.contextMenus.onClicked.addListener(function (info, tab) {
+    switch(info.menuItemId) {
+        case "sendTextToKKPedia": openSendTextPage(tab); break;
+    }
+});
+
+chrome.browserAction.onClicked.addListener(function(tab) {
+    console.log('browserAction clicked!');
+    openSendTextPopup(tab)
 });
 
 function openSendTextPage(tab) {
@@ -41,9 +42,7 @@ function openSendTextPage(tab) {
     });
 }
 
-chrome.browserAction.onClicked.addListener(function(tab) {
-    console.log('browserAction clicked!');
-
+function openSendTextPopup(tab) {
     currentPageUrl = tab.url;
     currentFileName = tab.title;
 
@@ -57,13 +56,13 @@ chrome.browserAction.onClicked.addListener(function(tab) {
             pageUrl: tab.url,
             fileName: tab.title,
             content: selectionText[0]
-            
+
         }, {}, function(res) {
             console.log('> finished sendMessage: togglePopup to tab.');
             console.log('> get response: ', res);
         });
     });
-});
+}
 
 function getCurrentFileData() {
     return {pageUrl: currentPageUrl, fileName: currentFileName, fileContent: currentFileContent};
