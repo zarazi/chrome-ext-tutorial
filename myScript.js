@@ -30,7 +30,7 @@ function togglePopupFrame() {
         f.style.display='none';
     }
      
-    // f.contentWindow.postMessage('togglePopupDiv','*');
+    f.contentWindow.postMessage({command: 'togglePopupDiv'},'*');
 }
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
@@ -43,3 +43,11 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     }
     sendResponse('done');
 });
+
+document.body.addEventListener("click", function(e) {
+    var iframe = document.getElementById('kk-popup-frame');
+    if (e.target.id !== iframe.id && iframe.style.display!=='none') {
+        // console.log('> closing kk-popup-frame');
+        togglePopupFrame();
+    }
+}, false);

@@ -6,21 +6,21 @@ function togglePopupDiv() {
     popupContainer.classList.toggle('popup-show');
 }
 
-// window.addEventListener('message', function(event) { 
-//     switch(event.data) {
-//         case 'togglePopupDiv': togglePopupDiv(); break;
-//     }
-// }); 
-
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    // console.log(message);
-    // console.log(sender);
-    if (message && message.command) {
-        switch(message.command) {
-            case 'togglePopup': togglePopupDiv(); break;
-        }
+window.addEventListener('message', function(event) { 
+    switch(event.data && event.data.command) {
+        case 'togglePopupDiv': togglePopupDiv(); break;
     }
-    sendResponse('done');
-});
+}); 
+
+// chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+//     // console.log(message);
+//     // console.log(sender);
+//     if (message && message.command) {
+//         switch(message.command) {
+//             case 'togglePopupDiv': togglePopupDiv(); break;
+//         }
+//     }
+//     sendResponse('done');
+// });
 
 console.log('> kk-popup-frame.js loaded.');
