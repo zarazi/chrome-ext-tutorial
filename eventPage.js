@@ -17,7 +17,7 @@ chrome.runtime.onInstalled.addListener(function() {
 
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
     switch(info.menuItemId) {
-        case "sendTextToKKPedia": openSendTextPage(tab); break;
+        case "sendTextToKKPedia": openSendTextPopup(tab); break;
     }
 });
 
