@@ -43,10 +43,26 @@ function openSendTextPage(tab) {
 
 chrome.browserAction.onClicked.addListener(function(tab) {
     console.log('browserAction clicked!');
-    chrome.tabs.sendMessage(tab.id, {command: 'togglePopup'}, {}, function(res) {
-        console.log('> finished sendMessage: togglePopup to tab.');
-        console.log('> get response: ', res);
-    })
+
+    currentPageUrl = tab.url;
+    currentFileName = tab.title;
+
+    chrome.tabs.executeScript(tab.id, {
+        code:'window.getSelection().toString()'
+
+    },function(selectionText){
+        currentFileContent = selectionText[0];
+        chrome.tabs.sendMessage(tab.id, {
+            command: 'togglePopup',
+            pageUrl: tab.url,
+            fileName: tab.title,
+            content: selectionText[0]
+            
+        }, {}, function(res) {
+            console.log('> finished sendMessage: togglePopup to tab.');
+            console.log('> get response: ', res);
+        });
+    });
 });
 
 function getCurrentFileData() {

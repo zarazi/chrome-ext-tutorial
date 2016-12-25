@@ -1,14 +1,31 @@
-function togglePopupDiv() {
-    // var iframe = window.frames['kk-popup-frame'];
-    // iframe.style.display = 'block';
+function fillData(message) {
 
+    document.getElementById('pageUrl').value = message.pageUrl || '';
+    document.getElementById('fileName').value = message.fileName || '';
+    document.getElementById('fileContent').value = message.content || '';
+}
+
+function togglePopupDiv(visibility) {
     var popupContainer = document.getElementById('kk-popup-container');
-    popupContainer.classList.toggle('popup-show');
+    if (visibility===true) {
+        popupContainer.classList.add('popup-show');
+    } else {
+        popupContainer.classList.remove('popup-show');
+    }
 }
 
 window.addEventListener('message', function(event) { 
-    switch(event.data && event.data.command) {
-        case 'togglePopupDiv': togglePopupDiv(); break;
+    var message = event.data;
+    if (message) {
+        switch(message.command) {
+            case 'showPopupDiv': 
+                togglePopupDiv(true); 
+                fillData(message);
+                break;
+            case 'hidePopupDiv': 
+                togglePopupDiv(false); 
+                break;
+        }
     }
 }); 
 
