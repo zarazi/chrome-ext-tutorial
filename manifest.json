@@ -3,7 +3,7 @@
 
   "name": "Saving content to KK-Pedia",
   "description": "This extension allow saving content to KK-Pedia",
-  "version": "1.0",
+  "version": "1.0.0",
   "icons": {
     "16": "kk-black-16.png",
     "32": "kk-black-32.png",
