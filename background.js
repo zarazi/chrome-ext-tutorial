@@ -32,7 +32,7 @@ function openSendTextPage(tab) {
 
     chrome.tabs.executeScript(tab.id, {
         code:'window.getSelection().toString()'
-        
+
     },function(selectionText){
         currentFileContent = selectionText[0];
         chrome.tabs.create({
@@ -105,8 +105,13 @@ chrome.runtime.onMessage.addListener(function(message, sender) {
         switch(message.command) {
             case 'sendTextToKKPedia': 
                 sendTextToKKPedia(message.pageUrl, message.fileName, message.fileContent, message.tabId);
-                console.log(message.pageUrl, message.fileName, message.fileContent, message.tabId);
-                chrome.tabs.sendMessage(message.tabId, {command: 'togglePopup'});
+                chrome.tabs.sendMessage(message.tabId, {command: 'togglePopup'}, function(res) {
+                    if (res) 
+                        chrome.tabs.executeScript(message.tabId, {
+                            code:   'if (window.getSelection && window.getSelection().empty)'+
+                                    ' window.getSelection().empty();'
+                        });
+                });
                 break;
         }
     }
