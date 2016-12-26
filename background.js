@@ -5,6 +5,9 @@ var currentFileName='';
 var currentFileContent='';
 var currentTabId='';
 
+var currentNotificationId = null;
+var currentNotificationUrl = null;
+
 chrome.runtime.onInstalled.addListener(function() {
     console.log('onInstalled!');
 
@@ -88,17 +91,32 @@ function sendTextToKKPedia(pageUrl, fileName, fileContent, tabId) {
     http.open("POST", url, true);
     http.onreadystatechange = function() {//Call a function when the state changes.
         if(http.readyState == 4 && http.status == 200) {
-            console.log('saved to KKPedia.');
+            console.log('saved to KKPedia: ', http.responseText);
             chrome.notifications.create(null, {
-                title: 'KK-Pedia Message',
+                title: 'ข้อความจาก KK-Pedia',
                 iconUrl: 'kk-black-64.png',
                 type: 'basic',
-                message: "Content is saved to KK-Pedia."
-            }, function() {});
+                message: "เซฟเรียบร้อย",
+                contextMessage: fileName,
+                buttons: [{
+                    title: "เปิดดู"
+                }]
+            }, function(id) {
+                currentNotificationId = id;
+                currentNotificationUrl = JSON.parse(http.responseText).url;
+            });
         }
     }
     http.send(formData);
 }
+
+chrome.notifications.onButtonClicked.addListener(function(notifId, btnIdx) {
+    if (notifId === currentNotificationId) {
+        if (btnIdx === 0) {
+            chrome.tabs.create({url: currentNotificationUrl});
+        }
+    }
+});
 
 chrome.runtime.onMessage.addListener(function(message, sender) {
     if (message && message.command) {
