@@ -29,13 +29,15 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 function openSendTextPage(tab) {
     currentPageUrl = tab.url;
     currentFileName = tab.title;
-    // currentFileContent = info.selectionText.replace(/[ ]{2,}/gi,'\n');
+
     chrome.tabs.executeScript(tab.id, {
         code:'window.getSelection().toString()'
+        
     },function(selectionText){
         currentFileContent = selectionText[0];
         chrome.tabs.create({
             url: chrome.extension.getURL('sendText.html')
+
         }, function(tab)  {
             console.log('new tab created: '+tab.id);
         });
@@ -59,8 +61,7 @@ function openSendTextPopup(tab) {
             content: selectionText[0]
 
         }, {}, function(res) {
-            console.log('> finished sendMessage: togglePopup to tab.');
-            console.log('> get response: ', res);
+            console.log('> popup created: ', res);
         });
     });
 }
