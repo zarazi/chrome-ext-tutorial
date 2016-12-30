@@ -85,8 +85,7 @@ function sendTextToKKPedia(pageUrl, fileName, fileContent, tabId) {
         console.log('sending data: ', pageUrl, fileName, fileContent);
 
     var http = new XMLHttpRequest();
-    //var url = "https://script.google.com/macros/s/AKfycbyImFFsA6WPxo9u-aDz52XbMZuJpE87Fl36Fmy8AduydmuVZBo1/exec";
-    var url = "https://script.google.com/macros/s/AKfycbwL3CFBU1qC8dB0d3f_FpmbqFa51pi7Hhiiqv3DtHsVhWLwuBg/exec";
+    var url = "https://script.google.com/macros/s/AKfycbw_pz9bTe_ZvLPsduiTaSAzJlaqLc6jO3CBDBynPGHsKj-a-WdR/exec";
 
     http.open("POST", url, true);
     http.onreadystatechange = function() {//Call a function when the state changes.
