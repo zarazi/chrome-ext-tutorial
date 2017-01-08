@@ -82,6 +82,11 @@ chrome.runtime.onMessage.addListener(function(message, sender) {
                         });
                 });
                 break;
+
+            case 'closePopup':
+                chrome.tabs.sendMessage(message.tabId, {command: 'togglePopup'}, function(res) {
+                });
+                break;
         }
     }
     // console.log(message);

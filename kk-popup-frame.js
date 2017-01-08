@@ -51,6 +51,17 @@ document.getElementById('sendButton').addEventListener('click', function(e){
     }
 });
 
+document.getElementById('cancelButton').addEventListener('click', function(e){
+    e.preventDefault();
+
+    var tabId = document.getElementById('tabId').value;
+    
+    chrome.runtime.sendMessage({
+        command: 'closePopup',
+        tabId: tabId && parseInt(tabId)
+    });
+});
+
 // chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 //     // console.log(message);
 //     // console.log(sender);
