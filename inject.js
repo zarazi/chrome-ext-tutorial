@@ -13,7 +13,7 @@ if (!location.ancestorOrigins.contains(extensionOrigin)) {
     //                        'width:300px;height:100%;z-index:1000;';
 
     // Styles from Google Save To Keep
-    iframe.style.cssText = 'height: 538px; margin: 0px; padding: 0px;' +
+    iframe.style.cssText = 'height: 558px; margin: 0px; padding: 0px;' +
                            'position: fixed; right: 5px; top: 5px;' +
                            'width: 370px; z-index: 2147483647;' +
                            'border-width: 0px; display: none';
@@ -38,9 +38,15 @@ function togglePopupFrame(message) {
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     // console.log(message);
     // console.log(sender);
+    
     if (message && message.command) {
         switch(message.command) {
-            case 'togglePopup': togglePopupFrame(message); break;
+            case 'togglePopup': 
+                var khead = $('p > a[href="../../index.php"]').parent().text().replace(/[ ]{2,}/g,' ');
+                console.log('> khead: '+khead);
+                if (!!khead) message.fileName = khead;
+                togglePopupFrame(message); 
+                break;
         }
     }
     sendResponse('done');
