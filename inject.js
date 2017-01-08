@@ -1,5 +1,3 @@
-console.log('> myScript is activated!');
-
 // Avoid recursive frame insertion...
 var extensionOrigin = 'chrome-extension://' + chrome.runtime.id;
 if (!location.ancestorOrigins.contains(extensionOrigin)) {
@@ -59,3 +57,5 @@ document.body.addEventListener("click", function(e) {
         togglePopupFrame({});
     }
 }, false);
+
+console.log('kk-pedia extension loaded.');

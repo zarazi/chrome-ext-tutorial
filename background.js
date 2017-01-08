@@ -1,5 +1,3 @@
-console.log('eventpage loaded.');
-
 var currentPageUrl='';
 var currentFileName='';
 var currentFileContent='';
@@ -9,7 +7,7 @@ var currentNotificationId = null;
 var currentNotificationUrl = null;
 
 chrome.runtime.onInstalled.addListener(function() {
-    console.log('onInstalled!');
+    console.log('context menu hooked.');
 
     chrome.contextMenus.create({
         id: 'sendTextToKKPedia',
@@ -141,5 +139,4 @@ chrome.notifications.onButtonClicked.addListener(function(notifId, btnIdx) {
     }
 });
 
-
-
+console.log('background page loaded.');

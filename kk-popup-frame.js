@@ -39,7 +39,8 @@ document.getElementById('sendButton').addEventListener('click', function(e){
     var fileContent = document.getElementById('fileContent').value;
     
     if (tabId && pageUrl && fileName && fileContent) {
-        console.log('sending data: ', tabId, pageUrl, fileName, fileContent);
+        // console.log('sending data: ', tabId, pageUrl, fileName, fileContent);
+        console.log('sending data to kk-pedia ...');
 
         chrome.runtime.sendMessage({
             command: 'sendTextToKKPedia',
@@ -73,4 +74,4 @@ document.getElementById('cancelButton').addEventListener('click', function(e){
 //     sendResponse('done');
 // });
 
-console.log('> kk-popup-frame.js loaded.');
+// console.log('> kk-popup-frame.js loaded.');
