@@ -69,6 +69,25 @@ function openSendTextPopup(tab) {
     });
 }
 
+chrome.runtime.onMessage.addListener(function(message, sender) {
+    if (message && message.command) {
+        switch(message.command) {
+            case 'sendTextToKKPedia': 
+                sendTextToKKPedia(message.pageUrl, message.fileName, message.fileContent, message.tabId);
+                chrome.tabs.sendMessage(message.tabId, {command: 'togglePopup'}, function(res) {
+                    if (res) 
+                        chrome.tabs.executeScript(message.tabId, {
+                            code:   'if (window.getSelection && window.getSelection().empty)'+
+                                    ' window.getSelection().empty();'
+                        });
+                });
+                break;
+        }
+    }
+    // console.log(message);
+    // console.log(sender);
+});
+
 function getCurrentFileData() {
     return {pageUrl: currentPageUrl, fileName: currentFileName, fileContent: currentFileContent};
 }
@@ -115,25 +134,6 @@ chrome.notifications.onButtonClicked.addListener(function(notifId, btnIdx) {
             chrome.tabs.create({url: currentNotificationUrl});
         }
     }
-});
-
-chrome.runtime.onMessage.addListener(function(message, sender) {
-    if (message && message.command) {
-        switch(message.command) {
-            case 'sendTextToKKPedia': 
-                sendTextToKKPedia(message.pageUrl, message.fileName, message.fileContent, message.tabId);
-                chrome.tabs.sendMessage(message.tabId, {command: 'togglePopup'}, function(res) {
-                    if (res) 
-                        chrome.tabs.executeScript(message.tabId, {
-                            code:   'if (window.getSelection && window.getSelection().empty)'+
-                                    ' window.getSelection().empty();'
-                        });
-                });
-                break;
-        }
-    }
-    // console.log(message);
-    // console.log(sender);
 });
 
 
